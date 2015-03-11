@@ -1,0 +1,41 @@
+{
+  "name": "bigpipe-pouchdb",
+  "version": "1.0.0",
+  "description": "BigPipe plugin to will provide a synced datastore per user and Pagelet",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha $(find test -name '*.test.js')",
+    "watch": "mocha --watch $(find test -name '*.test.js')",
+    "coverage": "istanbul cover ./node_modules/.bin/_mocha -- $(find test -name '*.test.js')",
+    "test-travis": "istanbul cover node_modules/.bin/_mocha --report lcovonly -- $(find test -name '*.test.js')"
+  },
+  "dependencies": {
+    "pouchdb": "3.3.x"
+  },
+  "devDependencies": {
+    "assume": "1.1.x",
+    "istanbul": "0.3.x",
+    "mocha": "2.2.x",
+    "pre-commit": "1.0.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bigpipe/plugin-pouchdb.git"
+  },
+  "keywords": [
+    "BigPipe",
+    "plugin",
+    "pouchdb",
+    "couchdb",
+    "sync",
+    "data",
+    "store",
+    "pagelet"
+  ],
+  "author": "Martijn Swaagman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bigpipe/plugin-pouchdb/issues"
+  },
+  "homepage": "https://github.com/bigpipe/plugin-pouchdb"
+}
