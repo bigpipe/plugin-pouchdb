@@ -10,6 +10,7 @@
     "test-travis": "istanbul cover node_modules/.bin/_mocha --report lcovonly -- $(find test -name '*.test.js')"
   },
   "dependencies": {
+    "fusing": "1.0.x",
     "pouchdb": "3.3.x"
   },
   "devDependencies": {
