@@ -1,7 +1,9 @@
 'use strict';
 
-var PouchDB = require('pouchdb')
-  , DataStore = require('./datastore');
+var DataStore = require('./datastore')
+  , PouchDB = require('pouchdb')
+  , path = require('path')
+  , fs = require('fs');
 
 //
 // Plugin name.
@@ -19,17 +21,34 @@ exports.name = 'pouchdb';
  * @api public
  */
 exports.server = function server(bigpipe, options) {
-  options = options('pouchdb', {});
+  var engine = options('engine', {}).name || 'bigpipe.js'
+    , local = path.join('.', 'adapters', engine)
+    , pouchdb = options('pouchdb', {});
 
-  if (!options.name) return bigpipe.emit('error', new Error(
+  if (!pouchdb.name) return bigpipe.emit('error', new Error(
     'Missing database name or CouchDB proxy address'
   ));
+
+  //
+  //  The client side adapter should exist.
+  //
+  if (!fs.existsSync(local)) return bigpipe.emit('error', new Error(
+    'Unkown engine the plugin has no adapter for this framework'
+  ));
+
+  //
+  // Provide the correct client side adapter based on used engine.
+  // Client side frameworks are extended to provide PouchDB options.
+  //
+  bigpipe.framework(require(local));
 
   //
   // Initialize the database, providing a CouchDB address will setup a proxy.
   // Properties in `pouchdb` will be provided directly to the PouchDB instance.
   //
   bigpipe.pouchdb = new PouchDB(options);
+
+  // @TODO provide data to the bootstrapper somehow.
 
   //
   // Extend the pagelet and provide a DataStore during construction.
