@@ -17,7 +17,7 @@ function DataStore(pagelet) {
   this.fuse();
 
   this.readable('_pagelet', pagelet);
-  this.readable('_pouchdb', pagelet._pipe.pouchdb);
+  this.readable('_pouchdb', pagelet._bigpipe.pouchdb);
   this.readable('_name', crypto.createHash('md5').update(pagelet.name).digest('hex'));
 
   pagelet.debug('Connected to datastore for %s', pagelet.id);
