@@ -59,8 +59,7 @@ exports.server = function server(bigpipe, options) {
  * @api public
  */
 exports.client = function client(bigpipe, options) {
-  // @TODO include library.
-  options = options('pouchdb', {});
+  options = options.pouchdb || {};
 
   if (!options.name) return bigpipe.emit('error', new Error(
     'Missing database name or CouchDB proxy address'
@@ -80,3 +79,9 @@ exports.client = function client(bigpipe, options) {
     pagelet.data = new DataStore(pagelet);
   });
 };
+
+//
+// Expose the PouchDB client side library that will be bundled with the
+// the client side JS.
+//
+exports.library = require.resolve('pouchdb/dist/pouchdb.min.js');
