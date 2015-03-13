@@ -42,9 +42,7 @@ exports.server = function server(bigpipe, options) {
   // provided options. This will extend the client side framework
   // with the PouchDB options.
   //
-  local = require(local);
-  local.pouchdb = pouchdb;
-  bigpipe.framework(local);
+  bigpipe.framework(require(local));
 
   //
   // Initialize the database, providing a CouchDB address will setup a proxy.

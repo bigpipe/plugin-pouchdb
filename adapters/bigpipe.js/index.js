@@ -10,11 +10,6 @@ var debug = require('diagnostics')('plugin:pouchdb')
 //
 BigPipeJS.extend({
   //
-  // PouchDB options that should be provided to the client.
-  //
-  pouchdb: {},
-
-  //
   // Replace the default bootstrap HTML template.
   //
   poucher: read(join(__dirname, 'bootstrap.html'), 'utf-8'),
@@ -27,9 +22,9 @@ BigPipeJS.extend({
    * @return {String} Rendered template
    * @api public
    */
-  bootstrap: function (data) {
+  bootstrap: function bootstrap(data) {
     try {
-      data.pouchdb = JSON.stringify(this.pouchdb);
+      data.pouchdb = JSON.stringify(this.bigpipe._options('pouchdb', {}));
     } catch(error) {
       debug('Failed to JSON.stringify the PouchDB options: %s,', error.message);
       data.pouchdb = '{}';
