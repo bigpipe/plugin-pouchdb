@@ -29,6 +29,6 @@ BigPipeJS.extend({
     // Call the original bootstrap template with all provided data
     // but now including PouchDB options.
     //
-    return this.get(read(join(__dirname, 'bootstrap.html')), data);
+    return this.get.call(BigPipeJS.prototype, 'bootstrap', data);
   }
 }).on(module);
