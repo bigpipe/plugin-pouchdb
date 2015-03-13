@@ -1,7 +1,6 @@
 'use strict';
 
-var PouchDB = require('pouchdb')
-  , path = require('path')
+var path = require('path')
   , fs = require('fs');
 
 //
@@ -23,15 +22,17 @@ exports.server = function server(bigpipe, options) {
   var engine = options('engine', {}).name || 'bigpipe.js'
     , local = path.resolve(__dirname, 'adapters', engine)
     , DataStore = require('./datastore')
-    , pouchdb = options('pouchdb', {});
+    , PouchDB = require('pouchdb');
 
-  if (!pouchdb.name) return bigpipe.emit('error', new Error(
+  //
+  // Extract the PouchDB options from BigPipe options.
+  //
+  options = options('pouchdb', {});
+
+  if (!options.name) return bigpipe.emit('error', new Error(
     'Missing database name or CouchDB proxy address'
   ));
 
-  //
-  //  The client side adapter should exist.
-  //
   if (!fs.existsSync(local)) return bigpipe.emit('error', new Error(
     'Unkown engine the plugin has no adapter for this framework'
   ));
@@ -78,12 +79,13 @@ exports.server = function server(bigpipe, options) {
  * @api public
  */
 exports.client = function client(bigpipe, options) {
-  var DataStore = require('./datastore');
+  var DataStore = require('./datastore')
+    , PouchDB = require('pouchdb');
 
   options = options.pouchdb || {};
 
   if (!options.name) return bigpipe.emit('error', new Error(
-    'Missing database name or CouchDB proxy address'
+    'Missing database name'
   ));
 
   //
@@ -105,4 +107,7 @@ exports.client = function client(bigpipe, options) {
 // Expose the PouchDB client side library that will be bundled with the
 // the client side JS.
 //
-exports.library = require.resolve('pouchdb');
+exports.library = {
+  path: require.resolve('pouchdb'),
+  name: 'pouchdb'
+};
