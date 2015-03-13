@@ -37,18 +37,20 @@ exports.server = function server(bigpipe, options) {
   ));
 
   //
-  // Provide the correct client side adapter based on used engine.
-  // Client side frameworks are extended to provide PouchDB options.
+  // Provide the correct client side adapter based on the used engine
+  // and add the PouchDB options to adapter so Fittings can use the
+  // provided options. This will extend the client side framework
+  // with the PouchDB options.
   //
-  bigpipe.framework(require(local));
+  local = require(local);
+  local.pouchdb = pouchdb;
+  bigpipe.framework(local);
 
   //
   // Initialize the database, providing a CouchDB address will setup a proxy.
   // Properties in `pouchdb` will be provided directly to the PouchDB instance.
   //
   bigpipe.pouchdb = new PouchDB(options);
-
-  // @TODO provide data to the bootstrapper somehow.
 
   //
   // Extend the pagelet and provide a DataStore during construction.
