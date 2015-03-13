@@ -1,7 +1,8 @@
 'use strict';
 
-var fuse = require('fusing')
-  , crypto = require('crypto');
+var debug = require('diagnostics')('datastore')
+  , crypto = require('crypto')
+  , fuse = require('fusing');
 
 /**
  * DataStore constructor that will always operate relative to the
@@ -14,13 +15,14 @@ var fuse = require('fusing')
 function DataStore(pagelet) {
   if (!this) return new DataStore(pagelet);
 
-  this.fuse();
+  var bigpipe = pagelet.bigpipe || pagelet._bigpipe;
 
+  this.fuse();
   this.readable('_pagelet', pagelet);
-  this.readable('_pouchdb', pagelet._bigpipe.pouchdb);
+  this.readable('_pouchdb', bigpipe.pouchdb);
   this.readable('_name', crypto.createHash('md5').update(pagelet.name).digest('hex'));
 
-  pagelet.debug('Connected to datastore for %s', pagelet.id);
+  debug('Connected to datastore for %s', pagelet.id);
 }
 
 //
@@ -53,7 +55,7 @@ DataStore.get('_id', function id() {
 DataStore.readable('get', function get(options, callback) {
   var id = this._id;
 
-  this._pagelet.debug('Fetching from DataStore document: %s', id);
+  debug('Fetching from document: %s', id);
   this._pouchdb.get(id, options, callback);
 });
 
@@ -68,7 +70,7 @@ DataStore.readable('put', function put(doc, rev, options, callback) {
   var id = this._id
     , n = Object.keys(doc).length;
 
-  this._pagelet.debug('Storing %d properties in DataStore document: %s', n, id);
+  debug('Storing %d properties in document: %s', n, id);
   this._pouchdb.post(doc, this._id, rev, options, callback);
 });
 

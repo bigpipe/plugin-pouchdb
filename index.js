@@ -103,4 +103,4 @@ exports.client = function client(bigpipe, options) {
 // Expose the PouchDB client side library that will be bundled with the
 // the client side JS.
 //
-exports.library = require.resolve('pouchdb/dist/pouchdb.min.js');
+exports.library = require.resolve('pouchdb');
