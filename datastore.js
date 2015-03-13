@@ -22,7 +22,7 @@ function DataStore(pagelet) {
   this.readable('_pouchdb', bigpipe.pouchdb);
   this.readable('_name', crypto.createHash('md5').update(pagelet.name).digest('hex'));
 
-  debug('Connected to datastore for %s', pagelet.id);
+  debug('Connected pagelet %s with id %s', pagelet.name, pagelet.id);
 }
 
 //
