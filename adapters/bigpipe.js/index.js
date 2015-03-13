@@ -1,6 +1,7 @@
 'use strict';
 
-var BigPipeJS = require('bigpipe.js')
+var debug = require('diagnostics')('plugin:pouchdb')
+  , BigPipeJS = require('bigpipe.js')
   , read = require('fs').readFileSync
   , join = require('path').join;
 
@@ -9,11 +10,13 @@ var BigPipeJS = require('bigpipe.js')
 //
 BigPipeJS.extend({
   //
-  // PouchDB plugin options.
-  // @type {Object}
+  // PouchDB options that should be provided to the client.
   //
   pouchdb: {},
 
+  //
+  // Replace the default bootstrap HTML template.
+  //
   poucher: read(join(__dirname, 'bootstrap.html'), 'utf-8'),
 
   /**
@@ -25,7 +28,12 @@ BigPipeJS.extend({
    * @api public
    */
   bootstrap: function (data) {
-    data.pouchdb = this.pouchdb;
+    try {
+      data.pouchdb = JSON.stringify(this.pouchdb);
+    } catch(error) {
+      debug('Failed to JSON.stringify the PouchDB options: %s,', error.message);
+      data.pouchdb = '{}';
+    }
 
     //
     // Call the original bootstrap template with all provided data

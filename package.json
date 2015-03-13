@@ -10,7 +10,8 @@
     "test-travis": "istanbul cover node_modules/.bin/_mocha --report lcovonly -- test.js"
   },
   "dependencies": {
-    "bigpipe.js": "^0.9.0",
+    "bigpipe.js": "0.9.x",
+    "diagnostics": "0.0.x",
     "fusing": "1.0.x",
     "pouchdb": "3.3.x"
   },
