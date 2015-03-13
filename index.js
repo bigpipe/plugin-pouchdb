@@ -1,7 +1,6 @@
 'use strict';
 
-var DataStore = require('./datastore')
-  , PouchDB = require('pouchdb')
+var PouchDB = require('pouchdb')
   , path = require('path')
   , fs = require('fs');
 
@@ -23,6 +22,7 @@ exports.name = 'pouchdb';
 exports.server = function server(bigpipe, options) {
   var engine = options('engine', {}).name || 'bigpipe.js'
     , local = path.resolve(__dirname, 'adapters', engine)
+    , DataStore = require('./datastore')
     , pouchdb = options('pouchdb', {});
 
   if (!pouchdb.name) return bigpipe.emit('error', new Error(
@@ -78,6 +78,8 @@ exports.server = function server(bigpipe, options) {
  * @api public
  */
 exports.client = function client(bigpipe, options) {
+  var DataStore = require('./datastore');
+
   options = options.pouchdb || {};
 
   if (!options.name) return bigpipe.emit('error', new Error(
