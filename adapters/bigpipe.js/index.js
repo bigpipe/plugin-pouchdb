@@ -14,6 +14,8 @@ BigPipeJS.extend({
   //
   pouchdb: {},
 
+  poucher: read(join(__dirname, 'bootstrap.html'), 'utf-8'),
+
   /**
    * Bootstrap templater extension that includes the provided PouchDB options
    * when BigPipe.JS is intialized.
@@ -29,6 +31,6 @@ BigPipeJS.extend({
     // Call the original bootstrap template with all provided data
     // but now including PouchDB options.
     //
-    return this.get.call(BigPipeJS.prototype, 'bootstrap', data);
+    return this.get('poucher', data);
   }
 }).on(module);
