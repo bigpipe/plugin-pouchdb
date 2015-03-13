@@ -22,7 +22,7 @@ exports.name = 'pouchdb';
  */
 exports.server = function server(bigpipe, options) {
   var engine = options('engine', {}).name || 'bigpipe.js'
-    , local = path.join('.', 'adapters', engine)
+    , local = path.resolve(__dirname, 'adapters', engine)
     , pouchdb = options('pouchdb', {});
 
   if (!pouchdb.name) return bigpipe.emit('error', new Error(
