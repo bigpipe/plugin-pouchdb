@@ -11,15 +11,15 @@
   },
   "dependencies": {
     "bigpipe.js": "0.9.x",
-    "diagnostics": "0.0.x",
+    "diagnostics": "~1.0.1",
     "fusing": "1.0.x",
-    "pouchdb": "3.3.x"
+    "pouchdb": "~6.0.7"
   },
   "devDependencies": {
-    "assume": "1.1.x",
-    "istanbul": "0.3.x",
-    "mocha": "2.2.x",
-    "pre-commit": "1.0.x"
+    "assume": "~1.4.1",
+    "istanbul": "~0.4.5",
+    "mocha": "~3.1.2",
+    "pre-commit": "~1.1.3"
   },
   "repository": {
     "type": "git",
